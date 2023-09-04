@@ -31,20 +31,20 @@ async def scrape(urls: list[str]):
             ),
         }
     ) as client:
-
+        proxy = "https://www.accesslinks.ai/parse-url?url="
         async def get_one(url):
             start = time.time()
             try:
-                r = await client.get(url, timeout=5)
+                r = await client.get(proxy + url, timeout=10)
                 r.raise_for_status()
-                html = r.text
+                html = r.content
             except:
                 html = ""
             finally:
                 print(f"GET {url}")
 
             return {
-                "content": extract_text(html),
+                "content": html,
                 "time": time.time() - start,
             }
 
