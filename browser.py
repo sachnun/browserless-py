@@ -22,13 +22,14 @@ def parse_article(result, all_results):
         {
             "url": result.url,
             "title": result.title,
+            "description": result.description,
             "content": content,
         }
     )
 
 
-def browser_search(query):
-    google = search(query, num_results=10, advanced=True)
+def browser_search(query, num_results=10):
+    google = search(query, num_results=num_results, advanced=True)
     all_results = []
 
     threads = []

@@ -2,6 +2,7 @@ from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse
 from browser import browser_search
 
+import typing
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
@@ -16,8 +17,14 @@ app = FastAPI(
 
 # ?q=python
 @app.get("/search/")
-def read_item(q: str = Query(None, description="Search query", example="python")):
-    results = browser_search(q)
+def read_item(
+    q: str = Query(None, description="Search query", example="python"),
+    # limit min 1-10
+    limit: typing.Optional[int] = Query(
+        10, ge=1, le=10, description="Number of results"
+    ),
+):
+    results = browser_search(q, limit)
     return JSONResponse(content=results)
 
 
