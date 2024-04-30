@@ -13,7 +13,7 @@ warnings.filterwarnings("ignore", category=InsecureRequestWarning)
 def parse_article(result, all_results):
     try:
         _, content = article_parser.parse(
-            url=result.url, output="markdown", verify=False
+            url=result.url, output="markdown", verify=False, timeout=5
         )
     except Exception:
         _, content = None, None
